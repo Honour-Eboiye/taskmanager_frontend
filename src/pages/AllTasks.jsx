@@ -28,6 +28,10 @@ const AllTasks = () => {
         },
         credentials: "include"
       });
+      if (response.status === 401 || response.status === 403) {
+        window.location.href = "/sign_in";
+        return;
+      }
       if (!response.ok) {
         const errorMessage = await response;
         throw new Error(
@@ -40,15 +44,18 @@ const AllTasks = () => {
           setIsLoading(false);
           window.location.reload();
         }, 2000);
-
-        // useEffect(()=>{
-
-        // },[isLoading])
       }
     } catch (error) {
       setConfirmDeleting(false);
     }
   };
+
+  // Add this useEffect to handle 401/403 errors from useApi (viewing tasks)
+  useEffect(() => {
+    if (errors && (errors.status === 401 || errors.status === 403 || errors === 401 || errors === 403)) {
+      window.location.href = "/sign_in";
+    }
+  }, [errors]);
 
   return (
     <div>
@@ -83,7 +90,7 @@ const AllTasks = () => {
 
         {/* ERRORS */}
         {errors && (
-          <div className="bg-red-700 text-white w-auto py-3 text-center">
+          <div className="bg-[#974FD0] text-white w-auto py-3 text-center">
             <h1>{errors}</h1>
           </div>
         )}

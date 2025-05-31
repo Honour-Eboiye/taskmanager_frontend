@@ -30,7 +30,7 @@ const Login = () => {
       setLoading(true)
       setApiError('')
       try {
-        const res = await fetch('https://officialtaskmanager.onrender.com/api/v1/sign_in', {
+        const res = await fetch('https://officialtaskmanager.onrender.com/api/v1/sign_in/', {
           method: 'POST', // <-- changed from 'GET' to 'POST'
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(form),
