@@ -17,6 +17,7 @@ const HomePage = () => {
       </div>
 
       {/* IMAGES */}
+      {/* Changes */}
       <div className='mx-auto w-60 lg:w-100'>
         <img src="/SLIDE1.png" alt="Worker" />
       </div>
