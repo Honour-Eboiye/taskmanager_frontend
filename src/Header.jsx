@@ -18,7 +18,25 @@ const Header = () => {
   const menuRef = useRef(null);
 
   useEffect(() => {
-    setLoggedIn(!!getCookie('token'));
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('https://officialtaskmanager.onrender.com/api/v1/auth/me', {
+          credentials: 'include',
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setLoggedIn(!!data.user);
+        } else {
+          setLoggedIn(false);
+        }
+      } catch {
+        setLoggedIn(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  useEffect(() => {
     // Close menu on outside click
     function handleClickOutside(event) {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
