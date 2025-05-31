@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+.custom-container {
+  @apply mx-auto max-w-screen-xl px-6 sm:px-8 lg:px-12;
+}
+
+.color {
+  @apply text-[#974FD0];
+}
+
+.custom-button {
+  @apply flex gap-2 items-center bg-[#974FD0] text-white text-[10px] rounded-sm py-2 px-4 cursor-pointer sm:text-[15px] active:bg-white
+   border-[#974FD0] border-1 active:text-[#974FD0] active:text-[10px];
+}
+
+.custom-done {
+  @apply text-center bg-[#974FD0] text-white text-[12px] rounded-sm py-2 px-4 cursor-pointer sm:text-[15px] active:bg-white
+   border-[#974FD0] border-1 active:text-[#974FD0] active:text-[10px];
+}
+
+.custom-submit {
+  @apply text-center bg-[#8800f8] text-white text-[12px] rounded-sm py-2 px-4 cursor-pointer sm:text-[15px] active:bg-white
+   border-[#974FD0] border-1 active:text-[#974FD0] active:text-[10px];
+}
+
+.delete {
+  @apply flex gap-2 items-center bg-white border-[#974FD0] border-1 text-[#974FD0] text-[10px] rounded-sm py-2 px-4 cursor-pointer sm:text-xs  active:bg-[#974FD0] active:text-white;
+}
+
+.Urgent{
+  @apply text-xs text-orange-400 sm:text-sm;
+}
+
+.Important { 
+  @apply text-xs text-green-300 sm:text-sm;
+}
