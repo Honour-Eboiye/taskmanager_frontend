@@ -52,7 +52,8 @@ const AllTasks = () => {
 
   // Add this useEffect to handle 401/403 errors from useApi (viewing tasks)
   useEffect(() => {
-    if (errors && (errors.status === 401 || errors.status === 403 || errors === 401 || errors === 403)) {
+    console.log(errors)
+    if (errors && (errors.includes('401') || errors.includes('403') || errors.includes('HTTP') || errors.includes('HTTP'))) {
       window.location.href = "/sign_in";
     }
   }, [errors]);

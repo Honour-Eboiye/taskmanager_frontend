@@ -105,7 +105,7 @@ const NewTask = () => {
   useEffect(() => {
     if (!formError) return;
 
-    else if(formError.includes('401') || formError.includes('403') || formError.includes('Access')){
+    else if(formError.includes('401') || formError.includes('403') || formError.includes('Access') || formError.includes('Fetch')){
       setTimeout(()=>{
         navigate('/sign_in')
       },3000)
