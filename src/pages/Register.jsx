@@ -34,7 +34,7 @@ const Register = () => {
       setLoading(true)
       setApiError('')
       try {
-        const res = await fetch('https://officialtaskmanager.onrender.com/api/v1/sign_up/', {
+        const res = await fetch('https://officialtaskmanager.onrender.com/api/v1/tasks/sign_up/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

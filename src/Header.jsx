@@ -6,6 +6,7 @@ const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const menuRef = useRef(null);
+  const buttonRef = useRef(null); // Add ref to the hamburger button
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,7 +16,7 @@ const Header = () => {
           credentials: 'include',
         });
         const data = await res.json();
-        console.log('Auth response:', data);
+        console.log('Auth response:', data); // for debugging
         if (res.ok && data.user) {
           setLoggedIn(true);
         } else {
@@ -31,12 +32,19 @@ const Header = () => {
     checkAuth();
   }, []);
 
+  // 🔐 Click outside to close menu (with ref fix)
   useEffect(() => {
     function handleClickOutside(event) {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target)
+      ) {
         setMenuOpen(false);
       }
     }
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -50,7 +58,7 @@ const Header = () => {
   if (loading) return null;
 
   return (
-    <div className='flex justify-between border-b-gray-300 border-b items-center custom-container py-2 sm:py-5'>
+    <div className='flex justify-between border-b-gray-300 border-b items-center custom-container py-2 sm:py-5 relative'>
       {/* LOGO */}
       <div>
         <Link to='/'>
@@ -60,9 +68,7 @@ const Header = () => {
 
       {/* Desktop Menu */}
       <div className='hidden sm:flex gap-5 items-center'>
-        {loggedIn && (
-          <img src="/PROFILE.png" alt="Profile" className="w-10 rounded-full border border-gray-300" />
-        )}
+        <img src="/PROFILE.png" alt="Profile" className="w-10 rounded-full border border-gray-300 mr-2" />
         <Link to='/new_task' className="hover:underline">New Task</Link>
         <Link to='/all_tasks' className="hover:underline">All Tasks</Link>
         {loggedIn ? (
@@ -78,7 +84,11 @@ const Header = () => {
       {/* Mobile Hamburger */}
       <div className="sm:hidden flex items-center">
         <img src="/PROFILE.png" alt="Profile" className="w-10 rounded-full border border-gray-300 mr-2" />
-        <button onClick={() => setMenuOpen(prev => !prev)} className="focus:outline-none">
+        <button
+          ref={buttonRef}
+          onClick={() => setMenuOpen(prev => !prev)}
+          className="focus:outline-none z-30"
+        >
           {menuOpen ? (
             <svg className="w-8 h-8" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
