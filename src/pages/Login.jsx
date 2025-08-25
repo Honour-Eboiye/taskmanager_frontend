@@ -1,59 +1,68 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router'
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Login = () => {
-  const [form, setForm] = useState({ email: '', password: '' })
-  const [errors, setErrors] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [apiError, setApiError] = useState('')
-  const navigate = useNavigate()
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
+  const navigate = useNavigate();
 
   const validate = () => {
-    const newErrors = {}
-    if (!form.email) newErrors.email = 'Email is required'
-    else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Invalid email'
-    if (!form.password) newErrors.password = 'Password is required'
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    const newErrors = {};
+    if (!form.email) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(form.email))
+      newErrors.email = "Invalid email";
+    if (!form.password) newErrors.password = "Password is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-  const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-    setErrors({ ...errors, [e.target.name]: '' })
-    setApiError('')
-  }
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
+    setApiError("");
+  };
 
-  const handleSubmit = async e => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (validate()) {
-      setLoading(true)
-      setApiError('')
+      setLoading(true);
+      setApiError("");
       try {
+        // DEVELOPERS MODE
+        // const res = await fetch("http://localhost:3000/api/v1/sign_in", {
+        //   method: "POST", // <-- changed from 'GET' to 'POST'
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify(form),
+        //   credentials: "include",
+        // });
+        
+        // LIVE MODE
         const res = await fetch('https://officialtaskmanager.onrender.com/api/v1/sign_in', {
           method: 'POST', // <-- changed from 'GET' to 'POST'
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(form),
           credentials:"include"
         })
-        let data = {}
+        let data = {};
         try {
-          data = await res.json()
+          data = await res.json();
         } catch {
-          data = {}
+          data = {};
         }
         if (res.ok) {
           // Handle successful login (e.g., save token, redirect)
-          navigate('/all_tasks')
+          navigate("/all_tasks");
         } else {
-          setApiError(data.message || 'Login failed')
+          setApiError(data.message || "Login failed");
         }
       } catch (err) {
-        setApiError('Network error')
+        setApiError("Network error");
       }
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -67,11 +76,15 @@ const Login = () => {
               name="email"
               value={form.email}
               onChange={handleChange}
-              className={`w-full border rounded px-3 py-2 outline-none ${errors.email ? 'border-[#974FD0]' : 'border-gray-300'}`}
+              className={`w-full border rounded px-3 py-2 outline-none ${
+                errors.email ? "border-[#974FD0]" : "border-gray-300"
+              }`}
               placeholder="Enter your email"
               disabled={loading}
             />
-            {errors.email && <p className="text-xs text-[#974FD0] mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-xs text-[#974FD0] mt-1">{errors.email}</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Password</label>
@@ -80,28 +93,39 @@ const Login = () => {
               name="password"
               value={form.password}
               onChange={handleChange}
-              className={`w-full border rounded px-3 py-2 outline-none ${errors.password ? 'border-[#974FD0]' : 'border-gray-300'}`}
+              className={`w-full border rounded px-3 py-2 outline-none ${
+                errors.password ? "border-[#974FD0]" : "border-gray-300"
+              }`}
               placeholder="Enter your password"
               disabled={loading}
             />
-            {errors.password && <p className="text-xs text-[#974FD0] mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-xs text-[#974FD0] mt-1">{errors.password}</p>
+            )}
           </div>
-          {apiError && <div className="text-[#974FD0] text-sm text-center">{apiError}</div>}
+          {apiError && (
+            <div className="text-[#974FD0] text-sm text-center">{apiError}</div>
+          )}
           <button
             type="submit"
             className="w-full bg-[#974FD0] text-white py-2 rounded font-semibold hover:bg-[#7c3aed] transition"
             disabled={loading}
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
         <div className="text-center mt-4">
           <span className="text-sm">Don't have an account? </span>
-          <a href="/sign_up" className="text-[#974FD0] font-medium hover:underline">Register</a>
+          <a
+            href="/sign_up"
+            className="text-[#974FD0] font-medium hover:underline"
+          >
+            Register
+          </a>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
