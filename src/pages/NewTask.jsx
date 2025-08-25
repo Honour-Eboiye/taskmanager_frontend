@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const NewTask = () => {
   const navigate = useNavigate();
-  const api = "https://officialtaskmanager.onrender.com/api/v1/tasks";
+  const api = "https://officialtaskmanager.onrender.com/api/v1/tasks/";
 
   const handleBack = () => {
     navigate(-1);

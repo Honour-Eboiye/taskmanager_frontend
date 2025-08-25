@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import { useEffect, useState } from "react";
 
 const AllTasks = () => {
-  const api = "https://officialtaskmanager.onrender.com/api/v1/tasks";
+  const api = "https://officialtaskmanager.onrender.com/api/v1/tasks/";
   const { info, isPending, errors } = useApi(api);
   const [deleting, setDeleting] = useState(false);
   const [confirmDeleting, setConfirmDeleting] = useState(false);
